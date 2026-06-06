@@ -46,7 +46,7 @@ async def turn(runner, memory_service, session_id, text, *, remember):
     async for event in runner.run_async(
         user_id=USER_ID, session_id=session_id, new_message=message
     ):
-        if event.is_final_response() and event.content:
+        if event.is_final_response() and event.content and event.content.parts:
             for part in event.content.parts:
                 if part.text:
                     print(f"[{session_id}] agent > {part.text}")
