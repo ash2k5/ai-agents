@@ -73,6 +73,18 @@ def test_final_text_ignores_non_text():
     assert final_text(events) == ""
 
 
+def test_final_text_includes_intermediate_text():
+    """Mid-stream (non-final) text is part of the result by design."""
+    events = [
+        event([part(text="Working on it...")]),
+        event([part(fn_name="place_shipping_order", fn_id="1")]),
+        event([part(text="Order approved.")]),
+    ]
+    result = final_text(events)
+    assert "Working on it..." in result
+    assert "Order approved." in result
+
+
 class FakeSessions:
     async def create_session(self, **kwargs):
         return None
