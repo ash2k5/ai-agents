@@ -43,7 +43,11 @@ def approval_response(approval_id: str, approved: bool) -> types.Content:
 
 
 def final_text(events) -> str:
-    """Joins the text parts of the agent's responses."""
+    """Joins every text part across all events, intermediate (non-final) text included.
+
+    Unlike the examples, this does not filter on ``is_final_response()``: the driver wants
+    the full transcript, so mid-stream narration is part of the returned text by design.
+    """
     texts = [
         part.text
         for event in events
