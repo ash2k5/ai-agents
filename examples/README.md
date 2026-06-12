@@ -8,7 +8,7 @@ your shell.
 |--------|-------|-------------------|
 | `approval_agent.py` | Human-in-the-loop approval on a resumable app (pause/resume for large orders) | none |
 | `memory_agent.py` | Cross-session recall via the memory service and the `load_memory` tool | none |
-| `mcp_agent.py` | Model Context Protocol tool integration (MCP "everything" server) | Node.js / `npx` on PATH |
+| `mcp_agent.py` | Model Context Protocol tool integration (MCP "everything" server) | Node.js / `npx` on PATH, plus the `mcp` extra: `uv pip install -e ".[mcp]"` |
 
 ```bash
 python examples/approval_agent.py

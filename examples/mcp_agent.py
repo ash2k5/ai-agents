@@ -12,11 +12,18 @@ import asyncio
 
 from google.adk.agents import LlmAgent
 from google.adk.runners import InMemoryRunner
-from google.adk.tools.mcp_tool import McpToolset, StdioConnectionParams
 from google.genai import types
-from mcp import StdioServerParameters
 
 from ai_agents.config import build_model, require_api_key
+
+try:
+    from google.adk.tools.mcp_tool import McpToolset, StdioConnectionParams
+    from mcp import StdioServerParameters
+except ImportError as exc:
+    raise SystemExit(
+        'This example needs the "mcp" extra. Install it with:\n'
+        '    uv pip install -e ".[mcp]"'
+    ) from exc
 
 APP_NAME = "mcp_demo"
 USER_ID = "demo_user"
