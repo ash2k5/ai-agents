@@ -27,12 +27,21 @@ adk run ai_agents  # terminal chat
 
 Ask it things like "What's the price of a MacBook Pro 14?" or "Ship 10 containers to Rotterdam" - the second one waits for your approval.
 
-The example scripts read `GOOGLE_API_KEY` from the shell, so set it first (`$env:GOOGLE_API_KEY = "..."`):
+Sessions persist in SQLite so an order awaiting approval survives a restart. The database lives in a per-user data directory by default (`platformdirs.user_data_dir("ai_agents")`, for example `%LOCALAPPDATA%\ai_agents` on Windows or `~/.local/share/ai_agents` on Linux). Set `ADK_DB_PATH` to an absolute path to override it.
+
+The example scripts read `GOOGLE_API_KEY` from the shell, so set it first:
+
+```bash
+export GOOGLE_API_KEY=...        # macOS/Linux
+```
+```powershell
+$env:GOOGLE_API_KEY = "..."      # Windows PowerShell
+```
 
 ```bash
 python examples/approval_agent.py
 python examples/memory_agent.py
-python examples/mcp_agent.py   # also needs Node/npx
+python examples/mcp_agent.py   # also needs Node/npx and the .[mcp] extra
 ```
 
 ## Tests
