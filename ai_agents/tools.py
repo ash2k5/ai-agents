@@ -12,7 +12,7 @@ from typing import Any
 
 from google.adk.tools import ToolContext
 
-from .config import LARGE_ORDER_THRESHOLD
+from .config import order_threshold
 
 _FEE_TABLE = {
     "platinum credit card": 0.02,
@@ -140,9 +140,9 @@ def place_shipping_order(
 ) -> dict:
     """Places a shipping order; orders above the large-order threshold need human approval.
 
-    Orders of ``LARGE_ORDER_THRESHOLD`` containers or fewer are auto-approved. Larger
-    orders pause for confirmation: the first call requests approval and returns a pending
-    status; ADK calls the tool again once a human decision arrives.
+    Orders at or below the large-order threshold are auto-approved. Larger orders pause for
+    confirmation: the first call requests approval and returns a pending status; ADK calls
+    the tool again once a human decision arrives.
 
     Args:
         num_containers: Number of containers to ship.
@@ -152,7 +152,7 @@ def place_shipping_order(
     Returns:
         A dict whose ``status`` is one of "approved", "pending", or "rejected".
     """
-    if num_containers <= LARGE_ORDER_THRESHOLD:
+    if num_containers <= order_threshold():
         return {
             "status": "approved",
             "order_id": f"ORD-{num_containers}-AUTO",

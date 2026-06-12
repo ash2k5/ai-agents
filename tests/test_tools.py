@@ -1,6 +1,6 @@
 """Unit tests for the function tools: happy paths plus edge and failure cases."""
 
-from ai_agents.config import LARGE_ORDER_THRESHOLD
+from ai_agents.config import order_threshold
 from ai_agents.tools import (
     get_exchange_rate,
     get_fee_for_payment_method,
@@ -9,6 +9,8 @@ from ai_agents.tools import (
     retrieve_userinfo,
     save_userinfo,
 )
+
+THRESHOLD = order_threshold()
 
 
 class TestGetProductInfo:
@@ -94,15 +96,15 @@ class TestPlaceShippingOrder:
         assert result["order_id"].endswith("AUTO")
 
     def test_threshold_is_inclusive(self, make_ctx):
-        result = place_shipping_order(LARGE_ORDER_THRESHOLD, "Singapore", make_ctx())
+        result = place_shipping_order(THRESHOLD, "Singapore", make_ctx())
         assert result["status"] == "approved"
 
     def test_large_order_requests_confirmation(self, make_ctx):
         ctx = make_ctx()
-        result = place_shipping_order(LARGE_ORDER_THRESHOLD + 1, "Rotterdam", ctx)
+        result = place_shipping_order(THRESHOLD + 1, "Rotterdam", ctx)
         assert result["status"] == "pending"
         assert ctx.requested is not None
-        assert ctx.requested["payload"]["num_containers"] == LARGE_ORDER_THRESHOLD + 1
+        assert ctx.requested["payload"]["num_containers"] == THRESHOLD + 1
 
     def test_large_order_approved(self, make_ctx, confirmation):
         ctx = make_ctx(tool_confirmation=confirmation(True))
