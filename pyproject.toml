@@ -7,16 +7,18 @@ requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Ashwin Santosh" }]
 dependencies = [
-    "google-adk[db]>=1.0",
+    "google-adk[db]>=2,<3",
+    "platformdirs>=4,<5",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=8",
-    "ruff>=0.6",
+    "pytest>=8,<10",
+    "ruff>=0.6,<1",
+    "pip-audit>=2.7,<3",
 ]
 mcp = [
-    "mcp>=1.0",
+    "mcp>=1,<2",
 ]
 
 [build-system]
