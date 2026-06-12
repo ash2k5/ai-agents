@@ -12,7 +12,7 @@ from google.adk.runners import Runner
 from google.adk.sessions import BaseSessionService
 
 from .agent import root_agent
-from .config import db_url
+from .config import db_path, db_url
 
 APP_NAME = "commerce_assistant"
 
@@ -27,5 +27,6 @@ def build_runner(session_service: BaseSessionService | None = None) -> Runner:
     if session_service is None:
         from google.adk.sessions import DatabaseSessionService
 
+        db_path().parent.mkdir(parents=True, exist_ok=True)
         session_service = DatabaseSessionService(db_url=db_url())
     return Runner(app=app, session_service=session_service)
