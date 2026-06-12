@@ -31,3 +31,6 @@ jobs:
 
       - name: Test
         run: uv run pytest -q
+
+      - name: Audit dependencies
+        run: uv run pip-audit
