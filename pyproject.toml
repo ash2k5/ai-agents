@@ -8,7 +8,7 @@ license = { text = "MIT" }
 authors = [{ name = "Ashwin Santosh" }]
 dependencies = [
     "google-adk[db]>=2.3.0,<3",
-    "platformdirs>=4,<5",
+    "platformdirs>=4.10.0,<5",
 ]
 
 [project.optional-dependencies]
